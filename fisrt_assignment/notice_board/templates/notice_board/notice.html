@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>notice board</title>
+    </head>
+    <body>
+        <style>
+            .container{
+                display: grid;
+                grid-template-columns: auto auto auto;
+                grid-template-rows: auto auto auto;
+                justify-content: center;
+                align-items: center;
+                column-gap: 10px;
+
+            }
+            .b1{
+                display: inline-block;
+                flex-direction: row;
+                flex-wrap: wrap;
+                height: 300px;
+                width: 200px;
+                border: 1px solid black;
+                justify-content: center;
+                align-items: center;
+                margin-top: 10px;
+            }
+        </style>
+        <h1>notice board</h1>
+        
+        <div class="container">
+            <div class="b1">
+                <h6>{{title1}}</h6>
+                <p>{{text1}}</p>
+                <p>{{contact number}}</p>
+            </div>
+            <div class="b1">
+                <h6>{{title1}}</h6>
+                <p>{{text1}}</p>
+                <p>{{contact number}}</p>
+            </div>
+            <div class="b1">
+                <h6>{{title1}}</h6>
+                <p>{{text1}}</p>
+                <p>{{contact number}}</p>
+            </div>
+             <div class="b1">
+                <h6>{{title1}}</h6>
+                <p>{{text1}}</p>
+                <p>{{contact number}}</p>
+            </div> 
+            <div class="b1">
+                <h6>{{title1}}</h6>
+                <p>{{text1}}</p>
+                <p>{{contact number}}</p>
+            </div> 
+            <div class="b1">
+                <h6>{{title1}}</h6>
+                <p>{{text1}}</p>
+                <p>{{contact number}}</p>
+            </div>
+            
+
+
+        </div>
+        <form method="POST",action="#">
+            {% csrf_token %}
+            <ul>
+                <li><input type="text" name="title" placeholder="title"/></li>
+                <li><input type="text" name="text" placeholder="text"/></li>
+                <li><input type="number" name="contact number" placeholder="contact number"></li>
+            </ul>
+        </form>
+    </body>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Models</title>
+    </head>
+    <body>
+        <h1>{{student.name}}</h1>
+        <table>
+            {% for item in marks %}
+            <tr>
+                <td>{{item.subject_name}}</td>
+                <td>{{item.score}}</td>
+                <form method="DELETE" action="{%url 'gradebook:delete_marks' item.id%}">
+                    <td><input type="submit" value="delete"></td>
+                </form>
+                
+            </tr>
+            {% endfor %}
+            <form method="POST" action="{%url 'gradebook:add_marks' student.id%}">
+                {% csrf_token %}
+                <tr>
+                    <td><input type="text" name="sub_name" placeholder="subject_name" /></td>
+                    <td><input type="text" name="score" placeholder="score"/></td>
+                    <td><input type="submit" name="add" value="add" /></td>
+
+                </tr>            
+            </form>
+            
+            <form method="POST" action="{%url 'gradebook:update_marks' student.id%}">
+                {% csrf_token %}
+
+                <td><input type="text" name="name" placeholder="name" /></td>
+                <td><input type="text" name="update_name" placeholder="update name" /></td>
+                <td><input type="text" name="update_score" placeholder="update score" /></td>
+                <td><input type="submit" value="update"></td>
+            </form>
+        </table>
+    </body>
+</html>

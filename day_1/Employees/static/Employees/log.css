@@ -1,0 +1,14 @@
+body{
+    background-color: rgb(142, 97, 97);
+    text-align: center;
+
+}
+.content{
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+}
+#button{
+    margin-top: 30px;
+    text-align: center;
+}

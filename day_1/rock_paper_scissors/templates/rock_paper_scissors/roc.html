@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <style>
+            body{
+                background-color: aquamarine;
+            }
+            h1{
+                text-align: center;
+            }
+            .container{
+                /* display:inline-block; */
+                display: grid;
+                grid-template-columns: 47% 5% 40%;
+                
+                padding: 10px;
+
+            }
+            .b1{
+               
+                padding: 20px;
+                font-size: 30px;
+                text-align: center;
+              
+                
+            }
+            
+            #button{
+               
+                background-color: blue;
+            }
+            p{
+                color: brown;
+                text-align: center;
+                font-weight: bolder;
+                font-size: 25px;
+            }
+            
+
+        </style>
+
+        <form method="post" action="{% url 'game_view' %}">
+                    {% csrf_token %}
+                    <h1>Rock_Paper_Scissor</h1>
+                    <div class="container">
+                        <div class="b1">
+                            <label for="player1_choice">Player 1:</label>
+                            <select name="player1_choice" id="player1_choice">
+                            <option value="rock">Rock</option>
+                            <option value="paper">Paper</option>
+                            <option value="scissors">Scissors</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="b1 ">
+                            <label for="player2_choice">Player 2:</label>
+                            <select name="player2_choice" id="player2_choice">
+                            <option value="rock">Rock</option>
+                            <option value="paper">Paper</option>
+                            <option value="scissors">Scissors</option>
+                            </select>
+                        </div>
+                        <br>
+                        <br>
+                        <button type="submit" id="button">Play!</button>
+                    </div>           
+        </form> 
+                {% if winner %}
+                    <p>{{ winner }}</p>
+                {% endif %}
+    </body>

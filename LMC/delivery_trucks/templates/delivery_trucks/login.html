@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <form method="POST" action="{% url 'delivery_trucks:login_to_free_truck' %}">
+            {% csrf_token %}
+            <p>{{error_message}}</p>
+            <!-- <label for="id">Employee ID</label>
+            <input type="text" name="id" id="id"><br/> -->
+            <label for="username">username</label>
+            <input type="text" name="username" id="username"><br/>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password"><br/>
+            <input type="submit" value="Login">
+        </form>
+    </body>
+</html>

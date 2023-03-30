@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Employee Details</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'Employees/log.css' %}">
+
+    </head>
+    <body>
+        <div class="content">
+            {% if authenticated_employee_id == employee_.id %}
+            <h1>Employee name:{{employee.name}}</h1>
+                <!-- {{attendence}} -->
+                
+                <table>
+                    {%for item in attendance%}
+                        <tr>
+                            <td>{{item.date_field}}</td>
+                            <td>{{item.attendance}}</td>
+                        </tr>
+                    {%endfor%}
+                            <form method="POST" action="{%url 'Employees:mark_attendance' employee.id %}">
+                                {% csrf_token %}
+                                <tr>
+                                    <td><input type="date" name="date"></td>
+
+                                    <td><select name="attendance" id="cars">
+                                        <option value="present">present</option>
+                                        <option value="absent">absent</option>
+                                    </select>
+                                    </td>
+                                    <!-- <td><intput type="submit"  value="markattendance"></td> -->
+                                    <td><input type="submit" value="Submit"></td>
+                                </tr>
+                            </form>
+                </table>
+        {% else %}
+            You are not authenticated. Please login <a href="{% url 'Employees:login' %}">here.</a>
+            
+        {% endif %}
+        </div>
+       
+        <div id="button"><a href="{% url 'Employees:logout' %}">Logout</a></div>
+           
+    </body>
+</html>
