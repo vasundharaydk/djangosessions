@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 from . models import Employees,Attendance
 
 def employee_details(request,id):
-    employee_ = Employees.objects.get(id=id)
+    employee_ = Employees.objects.get(pk=id)
     attendance=Attendance.objects.filter(employees=employee_)
 
 

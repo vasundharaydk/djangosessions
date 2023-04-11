@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        {% load static %}
+        <link rel="stylesheet"  herf="{% static 'css/main.css' %}">
+    </head>
+    <body>
+        <h1>hello</h1>
+        {% block content %}
+          <h1>Your Cart</h1>
+          <ul>
+              {% for product in object.products.all %}
+                  <li>
+                      <!-- <img src="{{ product.image.url }}" alt="{{ product.name }}"> -->
+                      <h2>{{ product.name }}</h2>
+                      <p>${{ product.price }}</p>
+                  </li>
+              {% endfor %}
+          </ul>
+          <p>Total: ${{ object.total }}</p>
+        {% endblock %}
+    </body>
+</html>
