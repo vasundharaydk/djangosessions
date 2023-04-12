@@ -16,17 +16,20 @@ def add_to_cart(request,name):
     full_name_ =request.session.get('full_name')
     user_object = customer.objects.get(full_name =full_name_)
     product_data_object =product_data.objects.get(name= name)
-    cart_ = [c.product_id.name for c in cart.objects.filter(customer = user_object)]
-    if name in cart_:
-        cart_ =cart.objects.filter(customer =user_object)
-        for car in cart_:
-            if car.product_id == product_data_object:
-                car.quantity = car.quantity + 1
-                car.save()
-            else:
-                cart_ = cart(customer=user_object,product_id=product_data_object)
-                cart_.save()
-                return redirect('shopping:product_data')
+    cart_items = {item.product_id.name : item for item in cart.objects.filter(customer =user_object)}
+    if name in cart_items:
+        cart_items[name].quantity +=1
+        cart_items[name].save()
+                
+    else:
+        cart_ = cart(customer=user_object,product_id=product_data_object)
+        cart_.save()
+    
+    return redirect('shopping:product_data')
+    # else:
+    #     error_message = "please login"
+    #     context = {'error_message': error_message}
+    #     return render(request,'shopping/cart.html',context)
 def cart_data(request):
     # if request.session.get('acccess'):
         full_name_ = request.session.get('full_name')
