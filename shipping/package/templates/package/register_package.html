@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <h3>register a package</h3>
+    <div class="container">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <tr>
+                <td><input type="text" name="phone" placeholder="phone"/></td><br>
+                <td><input type="textarea" name="address" placeholder="address" /></td><br>
+                <td><input type="submit" name="submit" value="submit" /></td>
+    
+            </tr>            
+        </form>
+        
+      
+    
+    </div>
+    {% if access %}
+            <p>successfully your package was register! your package id is :{{package_id}}</p>
+    {% endif %}
+
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
