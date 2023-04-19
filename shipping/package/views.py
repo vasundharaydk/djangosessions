@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 from . models import Package
 # Create your views here.
 def register_package(request):
@@ -20,23 +21,39 @@ def login_view(request):
     if request.method == 'GET':
         return render(request, 'package/login.html')
     if request.method == 'POST':
-        username = request.POST.get('username','')
-        password = request.POST.get('password','')
-        user = authenticate(username=username, password=password)
+        username_ = request.POST.get('username','')
+        password_ = request.POST.get('password','')
+        user = authenticate(request, username=username_, password=password_)
         if user is not None:
-            if user.is_active:
+            # if user.is_active:
                 login(request, user)
-                return redirect(request, 'package:postman')
+                print(username_,password_)
+                return redirect( 'package:postman')
         else:
             error_message = ' invalid user'
     return render(request, 'package/login.html',{'error_message':error_message})
+
+@login_required(login_url='package:login_view')
 def postman(request):
     package_details = Package.objects.all()
     
     return render(request, 'package/postman.html',{'package_details':package_details})
-def logout(request):
+def logout_view(request):
     logout(request)
-    return redirect(request, 'package:login')
+    return redirect( 'package:login_view')
+
+@login_required(login_url='package:login_view')
+def modify_package(request, id):
+    package = Package.objects.get(id=id)
+    newstatus = request.POST.get('status',package.status)
+    neweta = request.POST.get('eta', package.eta)
+    package.status = newstatus
+    package.eta = neweta
+    package.save()
+    return redirect('package:postman')
+def package_detail(request,id):
+    package = Package.objects.get(id=id)
+    return render(request, 'package/package_detail.html',{'package':package})
 
         
         

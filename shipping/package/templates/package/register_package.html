@@ -5,7 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          }
+        h3{
+            text-align: center;
+            font-weight: 300;
+            font-size: 40px;
+        }
+        .container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: 100px;
+            text-align: center;
+            border: 1px solid black;
+            
+            
+
+        }
+        .container.tr.td.input{
+            margin: 30px;
+
+        }
+        
+  
+    </style>
 </head>
 <body>
     <h3>register a package</h3>
@@ -13,19 +43,37 @@
         <form method="POST" action="">
             {% csrf_token %}
             <tr>
-                <td><input type="text" name="phone" placeholder="phone"/></td><br>
-                <td><input type="textarea" name="address" placeholder="address" /></td><br>
+                <td>Enter your phone number:<input type="text" name="phone" placeholder="phone"/></td><br>
+                <br>
+                <br>
+                <td>please enter address:<input type="textarea" name="address" placeholder="address" /></td><br>
+                <br>
+                <br>
                 <td><input type="submit" name="submit" value="submit" /></td>
     
             </tr>            
-        </form>
-        
-      
+        </form> 
     
     </div>
     {% if access %}
-            <p>successfully your package was register! your package id is :{{package_id}}</p>
+    <p>successfully your package was register! your package id is :{{package_id}}.Track it<a href="{% url 'package:package_detail' package_id%}"> here</a></p>
     {% endif %}
+    <p>Already got a tracking id? Check status here:
+        <form method="GET" onsubmit="return setAction(this)">
+            <input type="text" id="packageid">
+            <input type="submit" value="Track">
+        </form>
+    </p>
+    <p>Postmaster? <a href="{% url 'package:login_view' %}">Login here.</a></p>
+    <script>
+        function setAction(form) {
+            var id = document.getElementById("packageid").value
+            var url = "{% url 'package:package_detail' id=1 %}".replace(/1/, id)
+            form.action = url
+        }    
+    </script>
+
+  
 
     
 </body>
