@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ course.course_name }}</title>
+</head>
+<body>
+	<h1>{{ course.course_name }}</h1>
+    <h3>{{ course.description }}</h3>
+    <h3>total marks:{{ course.total_marks }}</h3>
+	<h2>Questions:</h2>
+	<ul>
+	{% for question in course.questions.all %}
+		<li>{{ question.question}}
+			<ol type="A">
+				<li>{{ question.option1 }}</li>
+				<li>{{ question.option2 }}</li>
+				<li>{{ question.option3 }}</li>
+				<li>{{ question.option4 }}</li>
+			</ol>
+		</li>
+	{% endfor %}
+    
+</body>
+</html>
