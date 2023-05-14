@@ -4,21 +4,69 @@
 	<title>{{ course.course_name }}</title>
 </head>
 <body>
+	
+
+
 	<h1>{{ course.course_name }}</h1>
-    <h3>{{ course.description }}</h3>
-    <h3>total marks:{{ course.total_marks }}</h3>
+	<p>Description: {{ course.description }}</p>
+	<p>Number of Questions: {{ course.question_number }}</p>
+	<p>Total Marks: {{ course.total_marks }}</p>
+
 	<h2>Questions:</h2>
-	<ul>
-	{% for question in course.questions.all %}
-		<li>{{ question.question}}
-			<ol type="A">
-				<li>{{ question.option1 }}</li>
-				<li>{{ question.option2 }}</li>
-				<li>{{ question.option3 }}</li>
-				<li>{{ question.option4 }}</li>
-			</ol>
-		</li>
-	{% endfor %}
+	<form method="POST" action="{% url 'online_quizz:exam_results' %}">
+		{% csrf_token %}
+		{% for question in questions %}
+			<ul>
+				<div class="form-group">
+					<label for="question">{{question.id}}. {{question.question}}</label>
+				</div>
+				<div class="form-check">
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="{{question.question}}" id="gridRadios1" value="option1" >
+						<label class="form-check-label" for="gridRadios1">
+							{{question.option1}}
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="{{question.question}}" id="gridRadios2" value="option2">
+						<label class="form-check-label" for="gridRadios2">
+							{{question.option2}}
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="{{question.question}}" id="gridRadios1" value="option3">
+						<label class="form-check-label" for="gridRadios1">
+							{{question.option3}}
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="{{question.question}}" id="gridRadios2" value="option4">
+						<label class="form-check-label" for="gridRadios2">
+							{{question.option4}}
+						</label>
+					</div>
+			</ul>
+		{% endfor %}
+	
+		<button  value = "submit"type="submit" class="btn btn-primary" >Submit</button>
+	</form>
+	
+
+	<script>
+		var timeLimitSeconds = { time_limit_seconds };
+		var countdownElement = document.getElementById('timer');
+		var countdownInterval = setInterval(function() {
+			timeLimitSeconds--;
+			countdownElement.innerText = 'Time remaining: ' + timeLimitSeconds + ' seconds';
+			if (timeLimitSeconds <= 0) {
+				clearInterval(countdownInterval);
+				alert('Time\'s up! Submitting quiz...');
+				document.getElementById('quiz-form').submit();
+			}
+		}, 1000);
+	</script>
+	
+	
     
 </body>
 </html>

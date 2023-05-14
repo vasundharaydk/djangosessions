@@ -8,9 +8,12 @@
 </head>
 <body>
     <h1>Course List</h1>
-    {% for course in courses %}
+    <form method="POST" action="{% url 'online_quizz:evaluate' %}">
+        {% csrf_token %}
+        {% for course in courses %}
         <h2>{{ course.course_name }}</h2>
         {% for question in course.questions %}
+       
             <div class="form-group">
                 <label for="question">{{question.question}}</label>
             </div>
@@ -44,9 +47,11 @@
         {% endfor %}
           <input id='timer' type='hidden' name="timer" value="">
           <br>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button  value = "submit"type="submit" class="btn btn-primary" >Submit</button>
         </form>
        
     {% endfor %}
+    </form>
+    
 </body>
 </html>

@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import  authenticate,login,logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from .models import Student,Teacher,Course,Question,Result
+from django.utils import timezone
 
 def home_page(request):
     return render(request,"online_quizz/main.html")
@@ -17,11 +19,11 @@ def student_login(request):
         if user is not None:
             login(request,user)
             # user_ = customer.objects.get(user=user)
-            teacher = Group.objects.get(name='teacher')
-            student = Group.objects.get(name='student')
+            teacher = Group.objects.get(name='teachers')
+            student = Group.objects.get(name='students')
             if teacher in user.groups.all():
                 #redirect to teacher homepage
-                return redirect()
+                return redirect('online_quizz:teacher_dasboard')
             if student in user.groups.all():
                 #redirect to student homepage
                 return  redirect('online_quizz:course_list')
@@ -58,45 +60,7 @@ def exam(request):
 def questions(request):
     questions_ =Question.objects.all()
     return render(request,'online_quizz/questions.html',{'questions':questions_})
-# def move(request):
-#     qs = Question.objects.all().order_by('pk')
-#     q = qs[0]
-#     prev = get_next_or_prev(qs, q, 'prev')
-#     next = get_next_or_prev(qs, q, 'next')
-def evaluate(request):
-    if request.method == 'POST':
-        print(request.POST)
-        questions=Question.objects.all()
-        score=0
-        wrong=0
-        correct=0
-        total=0
-        for q in questions:
-            total+=1
-            print(request.POST.get(q.question))
-            print(q.ans)
-            print()
-            if q.ans ==  request.POST.get(q.question):
-                score+=10
-                correct+=1
-            else:
-                wrong+=1
-        percent = score/(total*10) *100
-        context = {
-            'score':score,
-            'time': request.POST.get('timer'),
-            'correct':correct,
-            'wrong':wrong,
-            'percent':percent,
-            'total':total
-        }
-        return render(request,'Quiz/result.html',context)
-    else:
-        questions=Question.objects.all()
-        context = {
-            'questions':questions
-        }
-        return render(request,'Quiz/questions.html',context)
+
 
 def course_list(request):
     courses = Course.objects.all()
@@ -104,4 +68,23 @@ def course_list(request):
 
 def course_detail(request, pk):
     course = Course.objects.get(pk=pk)
-    return render(request, 'online_quizz/course_detail.html', {'course': course})
+    questions = Question.objects.filter(course=course)
+    return render(request, 'online_quizz/course_detail.html', {'course': course, 'questions': questions})
+@login_required
+def exam_results(request):
+    courses = Course.objects.all()
+    results = []
+    for course in courses:
+        exam_results = Result.objects.filter(student=request.student, exam=course)
+        if exam_results:
+            total_marks = course.total_marks
+            obtained_marks = sum(result.marks for result in exam_results)
+            percentage = obtained_marks / total_marks * 100
+            results.append({
+                'course': course,
+                'obtained_marks': obtained_marks,
+                'total_marks': total_marks,
+                'percentage': percentage,
+            })
+    return render(request, 'online_quizz/exam_results.html', {'results': results})
+

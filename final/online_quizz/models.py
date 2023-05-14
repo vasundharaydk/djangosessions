@@ -22,7 +22,7 @@ class Teacher(models.Model):
         return self.user.username
 class Course(models.Model):
    course_name = models.CharField(max_length=50)
-   description = models.CharField(max_length=50)
+   description = models.CharField(max_length=200)
    question_number = models.PositiveIntegerField()
    total_marks = models.PositiveIntegerField()
    def __str__(self):

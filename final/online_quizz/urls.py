@@ -11,4 +11,7 @@ urlpatterns = [
     # path('details',views.course_detail,name='course_detail')
     path('courses/', views.course_list, name='course_list'),
     path('details/<int:pk>/', views.course_detail, name='course_detail'),
+    path('exam_results/', views.exam_results, name='exam_results'),
+    # path('evaluate',views.evaluate,name='evaluate'),
+    #  path('results/<int:course_id>/<int:student_id>/', views.student_result_view, name='student_result'),
 ]
