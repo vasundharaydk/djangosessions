@@ -1,14 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Course List</title>
-</head>
-<body>
-	<h1>Courses:</h1>
-	<ul>
-	{% for course in courses %}
-		<li><a href="{% url 'online_quizz:course_detail' pk=course.pk %}">{{ course.course_name }}</a></li>
-	{% endfor %}
-	</ul>
-</body>
-</html>
+{% extends 'online_quizz\base.html' %}
+{% block title %}
+<title>course list</title>
+{% endblock %}
+{% block content %}
+    {% load static %}
+	<div class="cor"><h1>Courses:</h1></div>
+	<div class="card">
+		<ul class="course-list">
+			{% for course in courses %}
+				<li class="course-item">
+						<div class="course-info">
+							<img src="{{ course.image }}" alt="{{ course.course_name }}" class="course-image">
+						</div>
+						<button class="view-button"><a href="{% url 'online_quizz:course_detail' pk=course.pk %}" class="course-link">View Course</a></button>
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'online_quizz/dashborad_base.html' %}
+{% block title %}
+<title>Teacher View</title>
+{% endblock %}
+{% block content %}
+    <h2>Teacher View</h2>
+    {% for data in student_data %}
+        <h3>Student: {{ data.student.username }}</h3>
+        <p>Overall Percentage: {{ data.overall_percentage }}%</p>
+        <h4>Quiz Results:</h4>
+        {% for result in data.results %}
+            <p>Course: {{ result.exam.course_name }}</p>
+            <p>Marks: {{ result.marks }}</p>
+            <hr>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
+
+
+
+
+
+
+

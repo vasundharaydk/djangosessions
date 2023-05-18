@@ -1,0 +1,19 @@
+{% extends 'online_quizz\dashborad_base.html' %}
+{% block title %}
+    <title>Delete Question</title>
+{% endblock %}
+{% block content %}
+    <h2>Delete Question</h2>
+    <p>Are you sure you want to delete the following question?</p>
+    <p>Question: {{ question.question }}</p>
+    <p>Option 1: {{ question.option1 }}</p>
+    <p>Option 2: {{ question.option2 }}</p>
+    <p>Option 3: {{ question.option3 }}</p>
+    <p>Option 4: {{ question.option4 }}</p>
+    <p>Answer: {{ question.answer }}</p>
+    <form method="POST" action="{% url 'online_quizz:delete_question' course_id=course.id question_id=question.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+        <a href="{% url 'online_quizz:course_details' course_id=course.id %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}

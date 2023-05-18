@@ -1,0 +1,15 @@
+{% extends 'online_quizz/dashborad_base.html' %}
+{% block title %}
+<title>Delete Courses</title>
+{% endblock %}
+{% block content %}
+    <h1>Delete Course</h1>
+    <p>Are you sure you want to delete the course "{{ course.course_name }}"?</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+        <a href="{% url 'online_quizz:teacher_dashboard' %}">Cancel</a>
+    </form>
+{% endblock %}
+

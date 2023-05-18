@@ -1,0 +1,21 @@
+{% extends 'online_quizz\dashborad_base.html' %}
+{% block title %}
+<title>Course Details</title>
+{% endblock %}
+{% block content %}
+    <h2>Course Details: {{ course.course_name }}</h2>
+    <p>Description: {{ course.description }}</p>
+    <p>Total Marks: {{ course.total_marks }}</p>
+    <h3>Questions:</h3>
+    <ul>
+    {% for question in questions %}
+        <li>{{question.question_number}}  {{ question.question }} - - <a href="{% url 'online_quizz:delete_question' course.id question.id %}">Delete</a></li>
+        
+    {% endfor %}
+    </ul>
+    <a href="{% url 'online_quizz:add_question' course.id %}">Add Question</a>
+    <br>
+    <a href="{% url 'online_quizz:update_course' course.id %}">Update Course</a>
+    <br>
+    <a href="{% url 'online_quizz:delete_course' course.id %}">Delete Course</a>
+{% endblock %}
