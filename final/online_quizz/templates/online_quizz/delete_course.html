@@ -1,15 +1,68 @@
 {% extends 'online_quizz/dashborad_base.html' %}
 {% block title %}
-<title>Delete Courses</title>
+    Delete Courses
 {% endblock %}
 {% block content %}
+    <style>
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        h3{
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            border: 1px solid #c82333;
+            padding: 20px;
+            
+
+        }
+        form {
+            margin-top: 20px;
+        }
+        button {
+            background-color: #443abd;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+        .a {
+            background-color: #443abd;
+            color: #fff;
+            text-decoration: none;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            width: 15px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            justify-content: center;
+            
+        }
+    </style>
     <h1>Delete Course</h1>
-    <p>Are you sure you want to delete the course "{{ course.course_name }}"?</p>
-    
+    <h3>Are you sure you want to delete the course "{{ course.course_name }}"?</h3>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Delete</button>
-        <a href="{% url 'online_quizz:teacher_dashboard' %}">Cancel</a>
+        <div class="container">
+            <button type="submit">Delete</button><br>
+            <div class="a"><a class="btn btn-success" href="{% url 'online_quizz:teacher_dashboard' %}">Cancel</a></div>
+        </div>
+       
     </form>
 {% endblock %}
-

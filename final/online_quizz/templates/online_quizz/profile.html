@@ -1,17 +1,60 @@
 {% extends 'online_quizz/base.html' %}
 {% block title %}
-<title>gradebook</title>
+    Gradebook
 {% endblock %}
 {% block content %}
     {% load static %}
-    <h2>User Profile</h2>
-    <p>Overall Percentage: {{ overall_percentage|floatformat:2 }}%</p>
-    <ul>
-    {% for data in profile_data %}
-        <li>Course Name: {{ data.course_name }}</li>
-        <li>Marks: {{ data.marks }}</li>
-        <li>Percentage: {% if data.percentage %}{{ data.percentage|floatformat:2 }}%{% else %}N/A{% endif %}</li>
-        <li>Date: {{ data.date }}</li>
-    {% endfor %}
-    </ul>
+    <style>
+        .gradebook-title {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-align:center;
+        }
+        .overall-percentage {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align:center;
+        }
+        .profile-table {
+        width: 100%;
+        border: 1px solid black;
+        margin-bottom: 30px;
+        
+        }
+        .profile-table th, .profile-table td {
+        padding: 5px;
+        text-align: center;
+        border: 1px solid #0b0a0a;
+        }
+        .profile-table th {
+        background-color: gray;
+        border: 1px solid black;
+        
+        
+        }
+        .profile-table tr:hover {
+        background-color: #e6e6e6;
+        }
+    </style>
+    <h2 class="gradebook-title">Gradebook</h2>
+    <p class="overall-percentage">Overall Percentage: {{ overall_percentage|floatformat:2 }}%</p>
+    <table class="profile-table">
+        <tr>
+            <th>Course Name</th>
+            <th>Obtained Marks</th>
+            <th>Total Marks</th>
+            <th>Percentage</th>
+            <th>Date</th>
+        </tr>
+        {% for data in profile_data %}
+        <tr>
+            <td>{{ data.course_name }}</td>
+            <td>{{ data.marks }}</td>
+            <td>{{ data.total_marks }}</td>
+            <td>{% if data.percentage %}{{ data.percentage|floatformat:2 }}%{% else %}N/A{% endif %}</td>
+            <td>{{ data.date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

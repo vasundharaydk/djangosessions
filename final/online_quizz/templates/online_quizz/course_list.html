@@ -1,19 +1,52 @@
 {% extends 'online_quizz\base.html' %}
 {% block title %}
-<title>course list</title>
+	course list
 {% endblock %}
 {% block content %}
     {% load static %}
-	<div class="cor"><h1>Courses:</h1></div>
+	<style>
+		.cor h1{
+			text-align: center;
+			margin: 0 auto;
+			max-width: 800px;
+		}
+		
+		.course-list {
+			list-style-type: none;
+			padding: 0;
+			display: grid;
+			grid-template-columns: 1fr;
+			grid-gap: 10px;
+			margin-top: 20px;
+		}
+		
+		.course-item {
+			padding: 10px;
+			background-color: #f5f5f5;
+			text-align: center;
+			border-radius: 5px;
+		}
+		.course-item h4{
+			margin-right: 10px;
+		}
+		.card {
+			margin: 0 auto;
+			max-width: 800px;
+			background-color: #fff;
+			padding: 20px;
+		}
+	</style>
+	
+	<div class="cor">
+		<h1>Courses:</h1>
+	</div>
+	
 	<div class="card">
 		<ul class="course-list">
 			{% for course in courses %}
 				<li class="course-item">
-						<div class="course-info">
-							<img src="{{ course.image }}" alt="{{ course.course_name }}" class="course-image">
-						</div>
-						<button class="view-button"><a href="{% url 'online_quizz:course_detail' pk=course.pk %}" class="course-link">View Course</a></button>
-					</a>
+					<h4>{{ course.course_name }}</h4>
+					<a href="{% url 'online_quizz:course_detail' pk=course.pk %}" class="btn btn-primary">View Course</a>
 				</li>
 			{% endfor %}
 		</ul>

@@ -55,15 +55,18 @@ def register_page(request):
             error_message = 'Password and confirm password do not match.'
       
     return render(request, 'online_quizz/student_sign.html',  {'error_message': error_message})
+
 @permission_required('online_quizz.view_course',login_url='online_quizz:student_login')
 def course_list(request):
     courses = Course.objects.all()
     return render(request, 'online_quizz/course_list.html', {'courses': courses})
+
 @permission_required('online_quizz.view_question',login_url='online_quizz:student_login')
 def course_detail(request, pk):
     course = Course.objects.get(pk=pk)
     questions = Question.objects.filter(course=course)
     return render(request, 'online_quizz/course_detail.html', {'course': course, 'questions': questions})
+
 @permission_required('online_quizz.view_question',login_url='online_quizz:student_login')
 def evaluate_results(request, course_id):
     if request.method == 'POST':
@@ -96,7 +99,8 @@ def evaluate_results(request, course_id):
 def logout_(request):
     logout(request)
     return redirect('online_quizz:home_page')
-@permission_required('online_quizz.view_dashboard',login_url='online_quizz:student_login')
+# @permission_required('online_quizz.view_dashboard',login_url='online_quizz:student_login')
+@login_required (login_url='online_quizz:student_login')
 def teacher_dashboard(request):
 
     students = User.objects.filter(groups__name='students')
@@ -107,11 +111,12 @@ def teacher_dashboard(request):
         'students': students,
         'courses': courses,
         'student_count':student_count,
-        'course_count':course_count
+        'course_count':course_count,
+        
     }
 
     return render(request, 'online_quizz/teacher_dashboard.html', context)
-
+@login_required (login_url='online_quizz:student_login')
 def view_profile(request):
     user = request.user
     results = Result.objects.filter(group__name='students')  # Filter results by group name 'students'
@@ -129,15 +134,19 @@ def view_profile(request):
     profile_data = []
     for result in results:
         percentage = result.percentage if result.percentage is not None else 0.0
+        total_marks = sum(question.marks for question in result.exam.question_set.all())
+
         profile_data.append({
             'course_name': result.exam.course_name,
             'marks': result.marks,
             'percentage': percentage,
-            'date': result.date
+            'date': result.date,
+            'total_marks':total_marks
+
         })
     
     return render(request, 'online_quizz/profile.html', {'profile_data': profile_data, 'overall_percentage': overall_percentage})
-
+@login_required (login_url='online_quizz:student_login')
 def teacher_view(request):
     students = User.objects.filter(groups__name='students')  # Get all users in 'students' group
     student_data = []

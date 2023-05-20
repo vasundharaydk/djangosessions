@@ -1,21 +1,85 @@
 {% extends 'online_quizz\dashborad_base.html' %}
 {% block title %}
-<title>Course Details</title>
+    Course Details
 {% endblock %}
 {% block content %}
-    <h2>Course Details: {{ course.course_name }}</h2>
-    <p>Description: {{ course.description }}</p>
-    <p>Total Marks: {{ course.total_marks }}</p>
-    <h3>Questions:</h3>
-    <ul>
-    {% for question in questions %}
-        <li>{{question.question_number}}  {{ question.question }} - - <a href="{% url 'online_quizz:delete_question' course.id question.id %}">Delete</a></li>
+    <style>
+        .container {
+            padding: 10px;
+            margin-bottom: 50px;
+            
         
-    {% endfor %}
-    </ul>
-    <a href="{% url 'online_quizz:add_question' course.id %}">Add Question</a>
-    <br>
-    <a href="{% url 'online_quizz:update_course' course.id %}">Update Course</a>
-    <br>
-    <a href="{% url 'online_quizz:delete_course' course.id %}">Delete Course</a>
+        }
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        h3 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        ul {
+        list-style-type: disc;
+        margin-left: 20px;
+        }
+
+        li {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 5px;
+        }
+
+        a {
+        color: #007bff;
+        text-decoration: none;
+        }
+
+        a:hover {
+        text-decoration: underline;
+        }
+        .button-container {
+        margin-top: 10px;
+        }
+        .button-container button {
+         margin-right: 10px;
+        }
+        button {
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 5px;
+        padding: 4px 8px;
+        font-size: 14px;
+        cursor: pointer;
+        spacing:10px;
+        }
+          
+        button:hover {
+        background-color: #0056b3;
+          }
+    </style>
+    <div class="container">
+        <h2>Course Name: {{ course.course_name }}</h2>
+        <p>Description: {{ course.description }}</p>
+        <p>Total Marks: {{ course.total_marks }}</p>
+        <h3>Questions:</h3>
+        <ul>
+            {% for question in questions %}
+            <h3>{{question.question_number}} . {{ question.question }} --   <a class="btn btn-danger" href="{% url 'online_quizz:delete_question' course.id question.id %}">Delete</a></h3>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="button-container">
+        <a href="{% url 'online_quizz:add_question' course.id %}"><button type="button">Add Question</button></a>
+        <a href="{% url 'online_quizz:update_course' course.id %}"><button type="button">Update Course</button></a>
+        <a href="{% url 'online_quizz:delete_course' course.id %}"><button type="button">Delete Course</button></a>
+    </div>
 {% endblock %}

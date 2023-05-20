@@ -1,24 +1,30 @@
 {% extends 'online_quizz/base.html' %}
 {% block title %}
-<title>{{ course.course_name }}</title>
+	{{ course.course_name }}
 {% endblock %}
+
+{% block content %}
+    {% load static %}
 <style>
+
 	body {
 		font-family: Arial, sans-serif;
 	}
 
-	h1 {
+	.name h1 {
 		color:green;
 		text-transform:uppercase;
 		margin:10px;
 		text-align:center;
 		font-size:40px;
+		font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	}
 	h2{
-		color:orange;
+		color:rgba(115, 18, 29, 0.927);
 		font-style:italic;
 		font-weight:bold;
 		font-size:30px;
+		
 	}
 
 	p {
@@ -34,24 +40,32 @@
 		padding: 0;
 	}
 
-	.question {
-		height: 30px;
-		width: 900px;
-		background-color: skyblue;
-		font-style:italic;
+	.form-group {
+		height: 40px;
+		width: auto;
+		background-color: rgb(149, 203, 207);
 		font-weight:bold;
-		font-size:20px;
-		margin-top:30px;
-		padding:30px;
-		margin:10px;
+		font-size:25px;
+		margin:20px;
+		border-radius:5px;
+		
+	}
+	.form-group label {
+		margin-left: 5px;
+		color: #1d181d;
 	}
 
 	.form-check {
-		margin-bottom: 10px;
-		background-color:pink;
-		width:950px;
-		margin:10px;
+		height:50px;
+		width:500px;
+		background-color:rgb(149, 203, 207);
+		margin:20px;
 		font-size:20px;
+		border-radius:05px;
+		padding:15px;
+	}
+	.form-check:hover{
+		background-color:lightcoral;
 	}
 
 	.btn {
@@ -69,66 +83,67 @@
 	.btn:hover {
 		background-color: #45a049;
 	}
+	h3{
+		text-align:center;
+		color:gray;
+	}
+	p{
+		color:gray;
+	}
+	.container{
+		background-color:whitesmoke ;
+		border: 1px solid burlywood;
+		margin-left: 5px;
+		margin-bottom: 50px;
+	}
 </style>
-
-{% block content %}
-    {% load static %}
+     <div class="name">
 	<h1>{{ course.course_name }}</h1>
-	<p>{{ course.description }}</p>
+	<hr>
+	<h3>{{ course.description }}</h3>
 	<p>Total Marks: {{ course.total_marks }}</p>
+	<hr>
 
 	<h2>Questions:</h2>
-	<p>Time Left: <span id="timer">15:00</span></p> <!-- Timer element -->
-
-	<form method="POST" action="{% url 'online_quizz:evaluate_results' course.id %}">
-		{% csrf_token %}
-		{% for question in course.question_set.all %}
-		<div class="form-group">
-			<label for="question">{{ question.id }}. {{ question.question }}</label>
-		</div>
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="question_{{ question.id }}" id="option1" value="Option1">
-			<label class="form-check-label" for="Option1">
-				{{ question.option1 }}
-			</label>
-		</div>
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="question_{{ question.id }}" id="option2" value="Option2">
-			<label class="form-check-label" for="Option2">
-				{{ question.option2 }}
-			</label>
-		</div>
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="question_{{ question.id }}" id="option3" value="Option3">
-			<label class="form-check-label" for="Option3">
-				{{ question.option3 }}
-			</label>
-		</div>
-		<div class="form-check">
-			<input class="form-check-input" type="radio" name="question_{{ question.id }}" id="option4" value="Option4">
-			<label class="form-check-label" for="Option4">
-				{{ question.option4 }}
-			</label>
-		</div>
+	<!-- <p>Time Left: <span id="timer">15:00</span></p> Timer element -->
+	<div class="container">
+		<form method="POST" action="{% url 'online_quizz:evaluate_results' course.id %}">
+			{% csrf_token %}
+			{% for question in course.question_set.all %}
+			<div class="form-group">
+				<label for="question">{{ question.question_number }}. {{ question.question }}</label>
+			</div>
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="question_{{ question.id }}" id="option1" value="Option1">
+				<label class="form-check-label" for="Option1">
+					{{ question.option1 }}
+				</label>
+			</div>
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="question_{{ question.id }}" id="option2" value="Option2">
+				<label class="form-check-label" for="Option2">
+					{{ question.option2 }}
+				</label>
+			</div>
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="question_{{ question.id }}" id="option3" value="Option3">
+				<label class="form-check-label" for="Option3">
+					{{ question.option3 }}
+				</label>
+			</div>
+			<div class="form-check">
+				<input class="form-check-input" type="radio" name="question_{{ question.id }}" id="option4" value="Option4">
+				<label class="form-check-label" for="Option4">
+					{{ question.option4 }}
+				</label>
+			</div>
+			
+			{% endfor %}
 		
-		{% endfor %}
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
 	
-		<button type="submit" class="btn btn-primary">Submit</button>
-	</form>
 
-	<script>
-		var startTime = new Date().getTime();
-        var form = document.getElementById('quiz-form');
-        var submitBtn = document.getElementById('submit-btn');
-        submitBtn.addEventListener('click', function() {
-            var endTime = new Date().getTime();
-            var timeTaken = endTime - startTime;
-            var timeTakenField = document.createElement('input');
-            timeTakenField.setAttribute('type', 'hidden');
-            timeTakenField.setAttribute('name', 'time_taken');
-            timeTakenField.setAttribute('value', timeTaken);
-            form.appendChild(timeTakenField);
-        });
 	
-	</script>
 {% endblock %}

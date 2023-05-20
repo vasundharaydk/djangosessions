@@ -1,8 +1,58 @@
 {% extends 'online_quizz/dashborad_base.html' %}
 {% block title %}
-<title>update course</title>
+    update course
 {% endblock %}
 {% block content %}
+    {% load static %}
+    <style>
+        
+        h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+          }
+          
+          form {
+            width: 400px;
+            margin: 0 auto;
+          }
+          
+          label {
+            display: block;
+            margin-bottom: 10px;
+            font-size:20px;
+          }
+          
+          input
+           {
+            height:50px;
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border-radius:5px;
+            
+          }
+          textarea{
+            height:50px;
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border-radius:5px;
+            
+          }
+          
+          button {
+            background-color: #bd4821;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 140px;
+          }
+          
+          button:hover {
+            background-color: #45a049;
+          }
+    </style>
     <h1>Update Course</h1>
     <form method="post">
         {% csrf_token %}

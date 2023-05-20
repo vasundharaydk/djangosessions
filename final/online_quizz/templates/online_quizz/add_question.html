@@ -1,48 +1,580 @@
-{% extends 'online_quizz\dashborad_base.html' %}
-{% block title %}
-    <title>Add Question</title>
-{% endblock %}
-{% block content %}
-    <h2>Add Question</h2>
-    <form method="POST" action="{% url 'online_quizz:add_question' course_id=course.id %}">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="question">Question:</label>
-            <textarea class="form-control" id="question" name="question" rows="3"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="marks">marks</label>
-            <input type="number" class="form-control" id="marks" name="marks">
-        </div>
-        <div class="form-group">
-            <label for="question_number">question_number</label>
-            <input type="text" class="form-control" id="question_number" name="question_number">
-        </div>
-        <div class="form-group">
-            <label for="Option1">Option 1:</label>
-            <input type="text" class="form-control" id="option1" name="Option1">
-        </div>
-        <div class="form-group">
-            <label for="Option2">Option 2:</label>
-            <input type="text" class="form-control" id="option2" name="Option2">
-        </div>
-        <div class="form-group">
-            <label for="Option3">Option 3:</label>
-            <input type="text" class="form-control" id="option3" name="Option3">
-        </div>
-        <div class="form-group">
-            <label for="option4">Option 4:</label>
-            <input type="text" class="form-control" id="option4" name="Option4">
-        </div>
-        <div class="form-group">
-            <label for="answer">Answer:</label>
-            <select class="form-control" id="answer" name="answer">
-                <option value="Option1">Option 1</option>
-                <option value="Option2">Option 2</option>
-                <option value="Option3">Option 3</option>
-                <option value="Option4">Option 4</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add question</title>
+</head>
+<body>
+   
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Course List</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!------ Include the above in your HEAD tag ---------->
+	<style>
+		body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+			}
+		.cor{
+					
+			float: left;
+					
+			}	
+		header {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+		}
+
+		header h1 {
+			margin: 0;
+		}
+
+		.user-container {
+			display: flex;
+			align-items: center;
+		}
+
+		.user-greeting {
+			margin-right: 10px;
+		}
+
+		.logout-link,
+		.login-link {
+			color: #fff;
+			text-decoration: none;
+			border: 1px solid #fff;
+			padding: 5px 10px;
+			border-radius: 5px;
+		}
+
+		.logout-link:hover,
+		.login-link:hover {
+			background-color: #fff;
+			color: #333;
+		}
+
+
+
+        .footer {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			background-color: #333;
+			color: #fff;
+			padding: 20px;
+			text-align: center;
+			margin-top: 20px;
+		}
+
+		.footer-container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+
+		.footer-icons {
+			display: flex;
+			align-items: center;
+		}
+
+		.footer-icons a {
+			color: #fff;
+			text-decoration: none;
+			margin-right: 10px;
+		}
+
+		.footer-icons i {
+			font-size: 18px;
+		}
+
+		.footer-icons a:hover {
+			color: #ccc;
+		}
+
+
+				h1 {
+					margin: 20px 0;
+					text-align: center;
+				}
+
+				.card {
+			margin: 20px;
+		}
+
+
+		.card {
+			margin: 20px;
+		}
+
+		.course-list {
+			display: flex;
+			flex-wrap: wrap;
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			justify-content: center;
+		}
+
+		.course-item {
+			padding: 10px;
+			border: 1px solid #ccc;
+			margin: 10px;
+			width: 300px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+			background-color: #f2f2f2;
+		}
+
+		.course-item:hover {
+			background-color: #e0e0e0;
+		}
+
+		.course-link {
+			text-decoration: none;
+			color: #333;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.course-info {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.course-image {
+			width: 200px;
+			height: auto;
+			margin-bottom: 10px;
+		}
+
+		.course-details {
+
+			margin-bottom: 10px;
+		}
+
+		.course-name {
+			font-weight: bold;
+		}
+
+		.view-button {
+			padding: 8px 16px;
+			background-color: #333;
+			color: #fff;
+			border: none;
+			cursor: pointer;
+		}
+
+		.view-button:hover {
+			background-color: #666;
+		}
+
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+		
+		.dropbtn {
+			background-color: #333;
+			color: #fff;
+			border: none;
+			padding: 8px 16px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			background-color: #f9f9f9;
+			min-width: 160px;
+			box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+			z-index: 1;
+		}
+		
+		.dropdown-content a {
+			color: #333;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: block;
+		}
+		
+		.dropdown-content a:hover {
+			background-color: #ccc;
+		}
+		
+		.show {
+			display: block;
+		}
+		.objects{
+			display: flex;
+			flex-direction: column;
+			justify-content: space-evenly;
+			align-items: center;
+			align-content: space-evenly;
+			border:  black 1px solid;
+
+		}
+		body {
+			overflow-x: hidden;
+		 }
+		
+		/* Toggle Styles */
+		
+		#wrapper {
+			padding-left: 0;
+			-webkit-transition: all 0.6s ease;
+			-moz-transition: all 0.6s ease;
+			-o-transition: all 0.6s ease;
+			transition: all 0.6s ease;
+			
+		}
+		
+		#wrapper.toggled {
+			padding-left: 200px;
+		}
+		
+		#sidebar-wrapper {
+			z-index: 1000;
+			position: fixed;
+			left: 250px;
+			
+			width: 0;
+			height: 500px;
+			margin-left: -250px;
+			overflow-y: auto;
+			background-color:#312A25 !Important;
+		   
+			-webkit-transition: all 0.5s ease;
+			-moz-transition: all 0.5s ease;
+			-o-transition: all 0.5s ease;
+			transition: all 0.5s ease;
+		}
+		
+		#wrapper.toggled #sidebar-wrapper {
+			width: 0;
+		}
+		
+		#page-content-wrapper {
+			width: 100%;
+			position: absolute;
+			padding: 10px;
+		}
+		
+		#wrapper.toggled #page-content-wrapper {
+			position: absolute;
+			margin-left:-250px;
+		}
+		
+		/* Sidebar Styles */
+		
+		.sidebar-nav {
+			position: absolute;
+			top: 0;
+			right:15px;
+			width: 200px;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			z-index: -1;
+		}
+		
+		.sidebar-nav li {
+			text-indent: 20px;
+			line-height: 40px;
+		}
+		
+		.sidebar-nav li a {
+			display: block;
+			text-decoration: none;
+			color: #999999;
+		}
+		
+		.sidebar-nav li a:hover {
+			text-decoration: none;
+			color: #fff;
+			background: #312A25;
+		}
+		
+		.sidebar-nav li a:active,
+		.sidebar-nav li a:focus {
+			text-decoration: none;
+		}
+		
+		.sidebar-nav > .sidebar-brand {
+			height: 65px;
+			font-size: 18px;
+			line-height: 60px;
+		}
+		
+		.sidebar-nav > .sidebar-brand a {
+			color: #999999;
+		}
+		
+		.sidebar-nav > .sidebar-brand a:hover {
+			color: #fff;
+			background: none;
+		}
+		
+		@media(min-width:768px) {
+			#wrapper {
+				padding-left: 220px;
+			}
+		
+			#wrapper.toggled {
+				padding-left: 0;
+			}
+		
+			#sidebar-wrapper {
+				width: 200px;
+			}
+		
+			#wrapper.toggled #sidebar-wrapper {
+				width: 40px;
+				
+				
+			}
+		
+		#wrapper.toggled span {
+				visibility:hidden;
+				
+			}
+		  #wrapper.toggled   i {
+		 float:right;
+		 } 
+		
+			#page-content-wrapper {
+				padding: 20px;
+				position: relative;
+			}
+		
+			#wrapper.toggled #page-content-wrapper {
+				position: fixed;
+				margin-right: 0;
+			}
+		}
+		
+		
+		@media(max-width:414px) {
+		
+		#wrapper.toggled #page-content-wrapper {
+			position: absolute;
+			margin-right:60px;
+		}
+		
+		#wrapper.toggled {
+			padding-right: 60px;
+		}
+		
+		 #wrapper {
+				padding-left: 20px;
+			}
+		
+			#wrapper.toggled {
+				padding-left: 0;
+			}
+		
+			#sidebar-wrapper {
+				width: 50px;
+			}
+		
+			#wrapper.toggled #sidebar-wrapper {
+				width: 140px;
+				
+				
+			}
+			
+			#wrapper.toggled span {
+				visibility:visible;
+				position:relative;
+				left:70px;
+				bottom:13px;
+				
+			}
+		
+		#wrapper span {
+				visibility:hidden;
+				
+			}
+		  #wrapper.toggled   i {
+		 float:right;
+		 } 
+		 
+		  #wrapper   i {
+		 float:right;
+		 } 
+		
+			#page-content-wrapper {
+				padding: 5px;
+				position: relative;
+			}
+		
+			#wrapper.toggled #page-content-wrapper {
+				position: relative;
+				margin-right: 0;
+			}
+		
+		
+		
+		
+		}
+		
+		#submit-btn {
+			margin-bottom: 50px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Online Quizz</h1>
+		{% if user.is_authenticated %}
+			<div class="user-container">
+				<div class="dropdown">
+					<button onclick="toggleDropdown()" class="dropbtn">{{ user.username }}   <i class="fa-solid fa-user"></i></button>
+					<div id="dropdown-content" class="dropdown-content">
+						<a href="{% url 'online_quizz:logout'%}">Logout</a>
+					</div>
+				</div>
+			</div>
+		{% else %}
+			<div class="user-container">
+				<a href="#" class="login-link">Login</a>
+			</div>
+		{% endif %}
+	</header>
+	<div class="container">
+		<div class="row">
+			<h1>Teacher Dashboard</h1>
+			<hr/>
+			
+			<div id="wrapper">
+			<!-- Sidebar -->
+                <div id="sidebar-wrapper">
+                    <ul class="sidebar-nav" style="margin-left:0;">
+                        <li class="sidebar-brand">
+                            
+                            <a href="#menu-toggle"  id="menu-toggle" style="margin-top:20px;float:right;" > <i class="fa fa-bars " style="font-size:20px !Important;" aria-hidden="true" aria-hidden="true"></i> </a>
+                            
+                        </li>
+                        <li>
+                            <a href="{% url 'online_quizz:teacher_dashboard' %}"><i class="fa-solid fa-house-user"></i> <span style="margin-left:10px;">Dashboard</span>  </a>
+                        </li>
+                        <!-- <li>
+                            <a href="#"> <i class="fa fa-play-circle-o " aria-hidden="true"> </i> <span style="margin-left:10px;">courses</span> </a>
+                        </li> -->
+                        <!-- <li>
+                            <a href="#"> <i class="fa-solid fa-clipboard-question"></i> <span style="margin-left:10px;"> questions</span> </a>
+                        </li> -->
+                        <li>
+                            <a href="{% url 'online_quizz:teacher_courses' %}"> <i class="fa-solid fa-book"></i> <span style="margin-left:10px;"> courses</span> </a>
+                        </li>
+                        <!-- <li>
+                            <a href="#"><i class="fa fa-info-circle " aria-hidden="true"> </i> <span style="margin-left:10px;">Section </span> </a>
+                        </li> -->
+                        <li>
+                            <a href="#"> <i class="fa-solid fa-right-from-bracket"></i> <span style="margin-left:10px;"> logout</span> </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /#sidebar-wrapper -->
+        
+                <!-- Page Content -->
+                <h2>Add Question</h2>
+                <form method="POST" action="{% url 'online_quizz:add_question' course_id=course.id %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="question">Question:</label>
+                        <textarea class="form-control" id="question" name="question" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="marks">Marks</label>
+                        <input type="number" class="form-control" id="marks" name="marks">
+                    </div>
+                    <div class="form-group">
+                        <label for="question_number">Question Number</label>
+                        <input type="text" class="form-control" id="question_number" name="question_number">
+                    </div>
+                    <div class="form-group">
+                        <label for="Option1">Option 1:</label>
+                        <input type="text" class="form-control" id="option1" name="Option1">
+                    </div>
+                    <div class="form-group">
+                        <label for="Option2">Option 2:</label>
+                        <input type="text" class="form-control" id="option2" name="Option2">
+                    </div>
+                    <div class="form-group">
+                        <label for="Option3">Option 3:</label>
+                        <input type="text" class="form-control" id="option3" name="Option3">
+                    </div>
+                    <div class="form-group">
+                        <label for="option4">Option 4:</label>
+                        <input type="text" class="form-control" id="option4" name="Option4">
+                    </div>
+                    <div class="form-group">
+                        <label for="answer">Answer:</label>
+                        <select class="form-control" id="answer" name="answer">
+                            <option value="Option1">Option 1</option>
+                            <option value="Option2">Option 2</option>
+                            <option value="Option3">Option 3</option>
+                            <option value="Option4">Option 4</option>
+                        </select>
+                    </div>
+                    <button id="submit-btn" type="submit" class="btn btn-primary submit-button">Submit</button>
+                </form>
+			</div>				 
+			<script>
+				$("#menu-toggle").click(function(e) {
+					e.preventDefault();
+					$("#wrapper").toggleClass("toggled");
+				});
+			</script>	
+						
+	
+		
+		</div>
+	</div>
+	
+
+	<script>
+		function toggleDropdown() {
+			var dropdownContent = document.getElementById("dropdown-content");
+			dropdownContent.classList.toggle("show");
+		}
+		
+		window.onclick = function(event) {
+			if (!event.target.matches('.dropbtn')) {
+				var dropdowns = document.getElementsByClassName("dropdown-content");
+				for (var i = 0; i < dropdowns.length; i++) {
+					var openDropdown = dropdowns[i];
+					if (openDropdown.classList.contains('show')) {
+						openDropdown.classList.remove('show');
+					}
+				}
+			}
+		}
+		
+	</script>
+	
+</body>
+</html>
+
+
+

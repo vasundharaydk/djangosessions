@@ -1,12 +1,90 @@
+
 {% extends 'online_quizz/base.html' %}
 {% block title %}
-<title>{{ course.course_name }}</title>
+    {{ course.course_name }}
 {% endblock %}
 {% block content %}
     {% load static %}
-    <h2>Result</h2>
-    <p>Marks obtained: {{ result.marks }}</p>
-    <p>Total marks: {{ total_marks }}</p>
-    <p>Percentage: {{ percentage|floatformat:2 }}%</p>
+    <style>
+        .container {
+            max-width: 550px;
+            background-color: #e7dbdb;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            margin-top: 80px;
+    
+        }
+
+
+        h2 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 7px;
+        }
+
+        p {
+        font-size: 15px;
+        color: #666;
+        margin-bottom: 5px;
+        }
+
+        .result-info {
+        background-color: #f9f9f9;
+        padding: 10px;
+        border-radius: 4px;
+        margin-top: -6px;
+        border: black solid 1px;
+        }
+
+        .result-label {
+        font-weight: bold;
+        }
+
+        .result-value {
+        margin-left: 10px;
+        }
+
+        .percentage {
+        font-weight: bold;
+        font-size: 18px;
+        color: #4CAF50;
+        margin-top: 10px;
+        }
+
+        .result {
+        background-color: #f2f9fd;
+        padding: 20px;
+        border-radius: 4px;
+        margin-top: 10px;
+        }
+
+        .result-heading {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        }
+
+    </style>
+    <div class="container">
+        <h2>Result</h2>
+        <div class="result-info">
+          <p class="result-label">Marks obtained:</p>
+          <p class="result-value">{{ result.marks }}</p>
+        </div>
+        <div class="result-info">
+          <p class="result-label">Total marks:</p>
+          <p class="result-value">{{ total_marks }}</p>
+        </div>
+        <div class="result-info">
+          <p class="result-label">Percentage:</p>
+          <p class="result-value">{{ percentage|floatformat:2 }}%</p>
+        </div>
+        <div class="result">
+          <h3 class="result-heading">Congratulations on your achievement!</h3>
+          <p class="percentage">ALL THE BEST FOR NEXT QUIZ</p>
+        </div>
+    </div>
     <!-- <p>Time taken: {{ time_taken }}</p> -->
 {% endblock %}
